@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "track-eye-browser",
+=======
+  "name": "track-eye",
+>>>>>>> 8bc5bc8a9fcee853138c97dc409dee44d8827f57
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
