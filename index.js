@@ -846,7 +846,7 @@ var objectdetect = (function() {
   tracking.initUserMedia_ = function(element, opt_options) {
     window.navigator.getUserMedia({
       video: true,
-      audio: opt_options.audio
+      audio: false
     }, function(stream) {
         try {
           element.src = window.URL.createObjectURL(stream);
@@ -10476,6 +10476,7 @@ function store_points(x, y, k) {
     var latestEyeFeatures = null;
     var latestGazeData = null;
     var paused = false;
+    var isAlive = false;
     //registered callback for loop
     var nopCallback = function(data, time) {};
     var callback = nopCallback;
@@ -10998,6 +10999,7 @@ function store_points(x, y, k) {
      * @returns {*}
      */
     webgazer.begin = function(onFail) {
+        isAlive = true;
         if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.chrome){
             alert("WebGazer works only over https. If you are doing local development you need to run a local server.");
         }
@@ -11055,6 +11057,10 @@ function store_points(x, y, k) {
         return webgazer;
     };
 
+    webgazer.isAlive = function() {
+      return isAlive;
+  };
+
     /**
      * Resumes collection of data and predictions if paused
      * @returns {webgazer} this
@@ -11075,6 +11081,7 @@ function store_points(x, y, k) {
     webgazer.end = function() {
         //loop may run an extra time and fail due to removed elements
         paused = true;
+        isAlive = false;
 
         //webgazer.stopVideo(); // uncomment if you want to stop the video from streaming
 
@@ -11082,7 +11089,7 @@ function store_points(x, y, k) {
         document.body.removeChild(videoElement);
         document.body.removeChild(videoElementCanvas);
 
-        setGlobalData();
+        //setGlobalData();
         return webgazer;
     };
 
