@@ -11027,6 +11027,7 @@ function store_points(x, y, k) {
         })
         .catch(function(err) { // error handling
           onFail();
+          isAlive = false;
           console.log( err );
           videoElement = null;
           videoStream = null;
