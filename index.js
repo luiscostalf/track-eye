@@ -10013,7 +10013,6 @@ var mosseFilterResponses = function() {
      * @returns {Object}
      */
     webgazer.reg.RidgeRegThreaded.prototype.predict = function(eyesObj) {
-        console.log('LOGGING..');
         if (!eyesObj) {
             return null;
         }
@@ -10029,10 +10028,6 @@ var mosseFilterResponses = function() {
 
         predictedX = Math.floor(predictedX);
         predictedY = Math.floor(predictedY);
-
-        console.log('PredicedX');
-        console.log(predictedX);
-        console.log(predictedY);
 
         return {
             x: predictedX,
@@ -10421,7 +10416,6 @@ function store_points(x, y, k) {
 }
 
 (function(window, undefined) {
-    console.log('initializing webgazer');
     //strict mode for type safety
     'use strict';
 
