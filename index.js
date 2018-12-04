@@ -851,6 +851,7 @@ var objectdetect = (function() {
         try {
           element.src = window.URL.createObjectURL(stream);
         } catch (err) {
+          console.log('ERRROR',err);
           element.src = stream;
         }
       }, function() {
@@ -10446,7 +10447,7 @@ function store_points(x, y, k) {
     webgazer.params.videoViewerWidth = 320;
     webgazer.params.videoViewerHeight = 240;
 
-    webgazer.params.faceFeedbackBoxRatio = 0.66;
+    webgazer.params.faceFeedbackBoxRatio = 0.77;
 
     // View options
     webgazer.params.showVideo = true;
@@ -10524,21 +10525,20 @@ function store_points(x, y, k) {
         var vh = videoElement.videoHeight;
         var pw = parseInt(videoElement.style.width);
         var ph = parseInt(videoElement.style.height);
-
         // Find the size of the box.
         // Pick the smaller of the two video preview sizes
-        smaller = Math.min( vw, vh );
-        larger  = Math.max( vw, vh );
+        var smaller = Math.min( vw, vh );
+        var larger  = Math.max( vw, vh );
 
         // Overall scalar
-        scalar = ( vw == larger ? pw / vw : ph / vh );
+        var scalar = ( vw == larger ? pw / vw : ph / vh );
 
         // Multiply this by 2/3, then adjust it to the size of the preview
-        boxSize = (smaller * webgazer.params.faceFeedbackBoxRatio) * scalar;
+        var boxSize = (smaller * webgazer.params.faceFeedbackBoxRatio) * scalar;
 
         // Set the boundaries of the face overlay validation box based on the preview
-        topVal = (ph - boxSize)/2;
-        leftVal = (pw - boxSize)/2;
+        var topVal = (ph - boxSize)/2;
+        var leftVal = (pw - boxSize)/2;
 
         // top, left, width, height
         return [topVal, leftVal, boxSize, boxSize]
@@ -10929,8 +10929,8 @@ function store_points(x, y, k) {
 
         // Add other preview/feedback elements to the screen once the video has shown and its parameters are initialized
         document.body.appendChild(videoElement);
+        
         function setupPreviewVideo(e) {
-            
             // All video preview parts have now been added, so set the size both internally and in the preview window.
             setInternalVideoBufferSizes( videoElement.videoWidth, videoElement.videoHeight );
             webgazer.setVideoViewerSize( webgazer.params.videoViewerWidth, webgazer.params.videoViewerHeight );
@@ -10943,7 +10943,7 @@ function store_points(x, y, k) {
             // Run this only once, so remove the event listener
             e.target.removeEventListener(e.type, setupPreviewVideo);
         };
-        videoElement.addEventListener('timeupdate', setupPreviewVideo);
+        videoElement.addEventListener('loadedmetadata', setupPreviewVideo);
 
         
         addMouseEventListeners();
